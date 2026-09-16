@@ -6,6 +6,8 @@
 
 **Four Python studies · stochastic differential equations, Monte Carlo and option pricing**
 
+[![Offline tests](https://github.com/rodrigoacvarela20-web/stochastic_modelling/actions/workflows/tests.yml/badge.svg)](https://github.com/rodrigoacvarela20-web/stochastic_modelling/actions/workflows/tests.yml)
+
 </div>
 
 ## Overview
@@ -42,4 +44,4 @@ Project 04 also needs `python -m pip install -r requirements-market.txt`, market
 
 Numerical SDE discretisations have timestep bias and Monte Carlo has sampling uncertainty. The calibration applies a European exercise model to listed equity options, which may have American exercise rights, and assumes simplified interest/dividend curves. No historical synchronized options dataset or out-of-sample pricing assessment is supplied. See the [reproducibility notes](docs/REPRODUCIBILITY.md) and [technical audit](docs/SCIENTIFIC_AUDIT_2026-09-16.md).
 
-**Author:** [Rodrigo Varela](https://github.com/rodrigoacvarela20-web).
+**Project attribution:** Rodrigo Varela; computational and editorial assistance contributed to the project. The author is responsible for reviewing the code, calculations, and appropriate attribution. [Copyright and reuse conditions](COPYRIGHT.md): the current portfolio does not grant an open-source reuse licence; public GitHub viewing and forking remain subject to platform terms.
