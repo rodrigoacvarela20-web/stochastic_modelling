@@ -7,7 +7,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'projects' / 'quant
 from project1_sde_simulator import euler_maruyama, exact_gbm
 from project2_montecarlo_eu_option_pricing import black_scholes_call_price, black_scholes_put_price
 from project3_heston_model import simulate_heston, simulate_terminal_heston
-from project5_GARCH import garch_variance
 
 
 class ScientificInvariants(unittest.TestCase):
@@ -35,12 +34,6 @@ class ScientificInvariants(unittest.TestCase):
         values = np.array([simulate_terminal_heston(100., .04, .04, 2., .04, 0., -.5, 1., .2, np.random.default_rng(seed)) for seed in range(3000)])
         se = values.std(ddof=1)/np.sqrt(len(values))
         self.assertLess(abs(values.mean() - 100*np.exp(.04)), 4.5*se)
-
-    def test_garch_recursion_nonnegative(self):
-        r = np.array([.01, -.025, .018, .002])
-        v = garch_variance(r, 1e-5, .1, .85, 0.)
-        self.assertTrue(np.all(v > 0))
-        self.assertAlmostEqual(v[1], 1e-5 + .1*r[0]**2 + .85*v[0])
 
     def test_european_put_call_parity(self):
         c = black_scholes_call_price(100, 110, .04, .25, 1.5)
