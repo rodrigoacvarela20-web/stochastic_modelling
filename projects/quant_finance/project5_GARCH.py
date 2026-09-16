@@ -1,21 +1,30 @@
-"""Fit a Gaussian GARCH(1,1) model to live historical TSLA returns."""
-import yfinance as yf
+"""Fit a Gaussian GARCH(1,1) model to historical TSLA returns.
+
+The numerical functions are importable offline; only get_returns() needs Yahoo Finance.
+This is a research demonstration, not a validated volatility forecast.
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 
 
 def get_returns(symbol, period):
+    import yfinance as yf
+
     data = yf.Ticker(symbol).history(period=period)
-    if data.empty:
-        raise ValueError('Could not retrieve historical market data.')
+    if data.empty or 'Close' not in data:
+        raise ValueError('Could not retrieve usable historical market data.')
     log_returns = np.log(data['Close'] / data['Close'].shift(1)).dropna()
+    if log_returns.empty:
+        raise ValueError('Insufficient historical returns.')
     return data, log_returns
 
 
 def garch_variance(returns, omega, alpha, beta, mu):
     N = len(returns)
     variance = np.zeros(N)
+    if N == 0:
+        return variance
     variance[0] = np.var(returns)
     for i in range(1, N):
         epsilon_previous = returns[i - 1] - mu
@@ -26,7 +35,7 @@ def garch_variance(returns, omega, alpha, beta, mu):
 def negative_log_likelihood(parameters, returns, mu):
     omega, alpha, beta = parameters
     variance = garch_variance(returns, omega, alpha, beta, mu)
-    if not np.all(variance > 0):
+    if len(returns) == 0 or not np.all(np.isfinite(variance)) or not np.all(variance > 0):
         return np.inf
     epsilon = returns - mu
     log_likelihood = -0.5 * np.sum(np.log(2 * np.pi) + np.log(variance) + epsilon**2 / variance)
