@@ -21,6 +21,10 @@ Four educational numerical projects, from a geometric Brownian motion benchmark 
 | **03 · Heston simulation** | How do correlated asset and variance shocks affect paths and European payoffs? | [Python](projects/quant_finance/project3_heston_model.py) |
 | **04 · Exploratory Heston calibration** | How do European Heston prices compare with filtered TSLA call quotes? | [Python](projects/quant_finance/project4_heston_calibration.py) |
 
+## Featured reproducible experiment
+
+**[Replicated Monte Carlo convergence](docs/MONTE_CARLO_CONVERGENCE.md):** 200 independent estimates at each of four sample sizes, compared with the Black–Scholes call price. The write-up explains why a single error curve can be misleading, reports empirical RMSE and sampling variability, and provides an offline script that generates a figure. [Run the experiment](experiments/mc_convergence.py).
+
 ## Mathematical starting point
 
 The first study solves the same geometric Brownian motion using Euler–Maruyama and its exact solution:
@@ -36,6 +40,7 @@ python -m unittest discover -s tests -v
 python projects/quant_finance/project1_sde_simulator.py
 python projects/quant_finance/project2_montecarlo_eu_option_pricing.py
 python projects/quant_finance/project3_heston_model.py
+python experiments/mc_convergence.py --plot assets/monte_carlo_convergence.png
 ```
 
 Project 04 also needs `python -m pip install -r requirements-market.txt`, market-data access and QuantLib; see [data requirements](docs/HESTON_TSLA_CALIBRATION_DATA_STATUS_2026-09-16.md). A past market fit cannot be reproduced from a changing live chain without a timestamped archived snapshot.
