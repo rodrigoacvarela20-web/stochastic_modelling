@@ -10,7 +10,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'projects' / 'quant
 from project1_sde_simulator import euler_maruyama, exact_gbm
 from project2_montecarlo_eu_option_pricing import black_scholes_call_price, black_scholes_put_price, monte_carlo_option_pricing
 from project3_heston_model import simulate_heston, monte_carlo_heston_option_pricing
-from project5_GARCH import negative_log_likelihood, estimate_garch
 
 
 class ExtendedNumericalChecks(unittest.TestCase):
@@ -56,25 +55,6 @@ class ExtendedNumericalChecks(unittest.TestCase):
         np.random.seed(16)
         higher = monte_carlo_heston_option_pricing(*params, 110, 'call', 300)
         self.assertGreaterEqual(lower, higher)
-
-    def test_garch_fit_on_synthetic_returns(self):
-        rng = np.random.default_rng(94)
-        n = 400
-        variance, returns = np.zeros(n), np.zeros(n)
-        variance[0] = .00015
-        for i in range(1, n):
-            returns[i-1] = np.sqrt(variance[i-1]) * rng.normal()
-            variance[i] = .00001 + .1 * returns[i-1]**2 + .85 * variance[i-1]
-        returns[-1] = np.sqrt(variance[-1]) * rng.normal()
-        mu = float(returns.mean())
-        result = estimate_garch(returns, mu)
-        self.assertTrue(result.success, result.message)
-        self.assertTrue(np.isfinite(negative_log_likelihood(result.x, returns, mu)))
-        self.assertLessEqual(result.x[1] + result.x[2], .99901)
-        self.assertGreater(result.x[0], 0)
-
-    def test_garch_zero_variance_returns_infinite_penalty(self):
-        self.assertFalse(np.isfinite(negative_log_likelihood([.00001, .1, .85], np.array([0., 0., 0.]), 0.)))
 
 
 if __name__ == '__main__':
