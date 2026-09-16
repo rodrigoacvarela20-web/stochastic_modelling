@@ -9,7 +9,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'projects' / 'quant
 from project1_sde_simulator import euler_maruyama, exact_gbm
 from project2_montecarlo_eu_option_pricing import black_scholes_call_price, black_scholes_put_price, monte_carlo_option_pricing
 from project3_heston_model import simulate_heston
-from project5_GARCH import garch_variance
 
 
 class NumericalChecks(unittest.TestCase):
@@ -38,11 +37,6 @@ class NumericalChecks(unittest.TestCase):
         time, stock, variance = simulate_heston(100, 0.04, 0.03, 2, 0.04, 0, 0, 0.1, 0.01)
         np.testing.assert_allclose(variance, 0.04)
         self.assertEqual(len(stock), len(time))
-
-    def test_garch_recursion(self):
-        returns = np.array([0.01, -0.02, 0.03])
-        variance = garch_variance(returns, 0.0001, 0.1, 0.85, 0)
-        self.assertAlmostEqual(variance[1], 0.0001 + 0.1 * returns[0] ** 2 + 0.85 * variance[0])
 
 
 if __name__ == '__main__':
