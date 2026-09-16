@@ -1,6 +1,6 @@
 # Scientific and numerical audit — 16 September 2026
 
-**Scope: four retained educational Python studies.** This is an internal numerical/code review, not independent research replication, a validated trading strategy or a calibration against a preserved market-data snapshot. This note retains the findings relevant to the four studies remaining in the public portfolio.
+**Scope: four retained educational Python studies.** This is an internal numerical/code review, not independent research replication, a validated trading strategy or a calibration against a preserved market-data snapshot.
 
 ## Corrections
 
@@ -11,10 +11,10 @@
 
 ## Verification status
 
-The initial local audit exercised numerical invariants and synthetic quote filters. The test suite has subsequently been adjusted to the four retained studies. **The post-removal suite has not been rerun in this audit**, so the earlier test count should not be interpreted as a verified result for the current tree. No GitHub Actions result is claimed.
+The current four-study repository passed **20 offline unit tests** using Python 3.11 in [GitHub Actions run 1](https://github.com/rodrigoacvarela20-web/stochastic_modelling/actions/runs/35110226031). This includes basic path/price checks, boundary conditions and synthetic option quote filtering. The green result applies to that exact commit; the later README/copyright edits did not change the tested algorithms. CI tests do not validate a live historical market fit.
 
 ## Outstanding validation
 
-QuantLib, a verified timestamped TSLA option-chain snapshot and associated market inputs were unavailable for the full Heston calibration. The fitted parameters, their stability and pricing performance therefore remain unverified. Yahoo Finance quotes can be stale or unsynchronized even after filtering. The code uses European Heston call values and fixed flat rates, while listed equity options may offer American exercise rights.
+A verified timestamped TSLA option-chain snapshot and synchronized market inputs were unavailable for a complete Heston calibration; QuantLib-based pricing and parameter stability therefore remain unverified against that dataset. Yahoo Finance quotes can be stale or unsynchronized even after filtering. The code uses European Heston call values and fixed flat rates, while listed equity options may offer American exercise rights.
 
 For further work, preserve synchronized historical quotes, compare prices with an independent implementation, and measure numerical discretisation and Monte Carlo error. None of these studies establishes trading profitability.
