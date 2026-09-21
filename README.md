@@ -1,7 +1,5 @@
 <div align="center">
 
-![Stochastic modelling — research portfolio banner](assets/portfolio-banner.svg)
-
 # Stochastic Modelling & Quantitative Methods
 
 **Four Python studies · stochastic differential equations, Monte Carlo and option pricing**
