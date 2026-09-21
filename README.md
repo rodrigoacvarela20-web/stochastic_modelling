@@ -16,7 +16,7 @@ Four educational numerical projects, from a geometric Brownian motion benchmark 
 
 The first study solves the same geometric Brownian motion using Euler–Maruyama and its exact solution:
 
-$$dS_t=\mu S_t\,dt+\sigma S_t\,dW_t,\quad S_t=S_0\exp\left((\mu-\tfrac12\sigma^2)t+\sigma W_t\right).$$
+$$dS_t=\mu S_t\,dt+\sigma S_t\,dW_t,\quad S_t=S_0\exp{\left((\mu-\tfrac12\sigma^2)t+\sigma W_t\right)}.$$
 
 ## Run the examples
 
