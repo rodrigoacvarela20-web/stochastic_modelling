@@ -12,13 +12,6 @@
 
 Four educational numerical projects, from a geometric Brownian motion benchmark to exploratory Heston calibration. The purpose is to understand the mathematics, implementations and modelling assumptions; no predictive trading performance or production-grade pricing is claimed.
 
-| Study | Question | Code |
-| :-- | :-- | :-- |
-| **01 · Geometric Brownian motion** | How does Euler–Maruyama compare with the exact process driven by the same Brownian path? | [Python](projects/quant_finance/project1_sde_simulator.py) |
-| **02 · European option pricing** | How does Monte Carlo sampling compare with Black–Scholes? | [Python](projects/quant_finance/project2_montecarlo_eu_option_pricing.py) |
-| **03 · Heston simulation** | How do correlated asset and variance shocks affect paths and European payoffs? | [Python](projects/quant_finance/project3_heston_model.py) |
-| **04 · Exploratory Heston calibration** | How do European Heston prices compare with filtered TSLA call quotes? | [Python](projects/quant_finance/project4_heston_calibration.py) |
-
 ## Mathematical starting point
 
 The first study solves the same geometric Brownian motion using Euler–Maruyama and its exact solution:
