@@ -1,3 +1,0 @@
--r requirements.txt
-yfinance>=0.2
-QuantLib>=1.30
