@@ -1,38 +1,90 @@
-<div align="center">
+# Stochastic Finance Models
 
-# Stochastic Modelling & Quantitative Methods
+A compact numerical portfolio in stochastic modelling and derivative pricing.
 
-**Four Python studies · stochastic differential equations, Monte Carlo and option pricing**
+The repository currently contains two focused projects:
 
-[![Offline tests](https://github.com/rodrigoacvarela20-web/stochastic_modelling/actions/workflows/tests.yml/badge.svg)](https://github.com/rodrigoacvarela20-web/stochastic_modelling/actions/workflows/tests.yml)
+1. **Geometric Brownian Motion & SDE Simulation**
+   - Euler--Maruyama discretisation of
+     \(dS_t = \mu S_t\,dt + \sigma S_t\,dW_t\)
+   - exact GBM solution evaluated on the same Brownian path
+   - absolute, relative and RMSE path-error analysis
+   - Monte Carlo validation of terminal mean and variance
 
-</div>
+2. **Monte Carlo Option Pricing & Black--Scholes Validation**
+   - risk-neutral simulation of terminal prices
+   - European call and put pricing
+   - closed-form Black--Scholes benchmark
+   - Monte Carlo standard errors and 95% confidence intervals
+   - convergence study against the analytical price, with the
+     \(N^{-1/2}\) Monte Carlo reference rate
 
-## Overview
+## Repository structure
 
-Four educational numerical projects, from a geometric Brownian motion benchmark to exploratory Heston calibration. The purpose is to understand the mathematics, implementations and modelling assumptions; no predictive trading performance or production-grade pricing is claimed.
+```text
+stochastic_modelling/
+├── gbm/
+│   └── gbm_simulation.py
+├── black_scholes/
+│   └── option_pricing.py
+├── tests/
+│   ├── test_gbm.py
+│   └── test_black_scholes.py
+├── requirements.txt
+└── README.md
+```
 
-## Mathematical starting point
-
-The first study solves the same geometric Brownian motion using Euler–Maruyama and its exact solution:
-
-$$dS_t=\mu S_t\,dt+\sigma S_t\,dW_t,\quad S_t=S_0\exp{\left((\mu-\tfrac12\sigma^2)t+\sigma W_t\right)}.$$
-
-## Run the examples
+## Run locally
 
 ```bash
 python -m venv .venv
 python -m pip install -r requirements.txt
+
+python gbm/gbm_simulation.py
+python black_scholes/option_pricing.py
 python -m unittest discover -s tests -v
-python projects/quant_finance/project1_sde_simulator.py
-python projects/quant_finance/project2_montecarlo_eu_option_pricing.py
-python projects/quant_finance/project3_heston_model.py
 ```
 
-Project 04 also needs `python -m pip install -r requirements-market.txt`, market-data access and QuantLib; see [data requirements](docs/HESTON_TSLA_CALIBRATION_DATA_STATUS_2026-09-16.md). A past market fit cannot be reproduced from a changing live chain without a timestamped archived snapshot.
+## Mathematical focus
 
-## Scope and limitations
+### Geometric Brownian motion
 
-Numerical SDE discretisations have timestep bias and Monte Carlo has sampling uncertainty. The calibration applies a European exercise model to listed equity options, which may have American exercise rights, and assumes simplified interest/dividend curves. No historical synchronized options dataset or out-of-sample pricing assessment is supplied. See the [reproducibility notes](docs/REPRODUCIBILITY.md) and [technical audit](docs/SCIENTIFIC_AUDIT_2026-09-16.md).
+The model is
 
-**Project attribution:** Rodrigo Varela; computational and editorial assistance contributed to the project. The author is responsible for reviewing the code, calculations, and appropriate attribution. [Copyright and reuse conditions](COPYRIGHT.md): the current portfolio does not grant an open-source reuse licence; public GitHub viewing and forking remain subject to platform terms.
+\[
+dS_t = \mu S_t\,dt + \sigma S_t\,dW_t,
+\]
+
+with exact solution
+
+\[
+S_t = S_0
+\exp\!\left[
+\left(\mu-\frac{1}{2}\sigma^2\right)t
++\sigma W_t
+\right].
+\]
+
+The numerical experiment compares Euler--Maruyama with this exact solution
+along the same Brownian path, then checks empirical terminal moments against
+their theoretical values.
+
+### European option pricing
+
+Under the Black--Scholes assumptions, terminal prices are simulated under the
+risk-neutral measure and discounted option payoffs estimate
+
+\[
+V_0=e^{-rT}\mathbb{E}^{\mathbb{Q}}[\Phi(S_T)].
+\]
+
+Monte Carlo estimates are compared with the closed-form Black--Scholes prices.
+The experiment reports sampling uncertainty and illustrates the characteristic
+Monte Carlo convergence rate of order \(N^{-1/2}\).
+
+## Scope
+
+These are educational numerical projects designed to demonstrate stochastic
+modelling, numerical simulation, statistical validation and analytical
+benchmarking. They are not presented as production pricing libraries or
+trading strategies.
